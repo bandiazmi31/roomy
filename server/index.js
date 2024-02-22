@@ -14,10 +14,14 @@ app.post('/login', (req, res) => {
     userModel.findOne({username: username})
     .then(user => {
         if (user) {
-            if (user.password === password) {
-                res.json("Login Success!")
+            if (user.role === 'User') {
+                if (user.password === password) {
+                    res.json("Login Success!")
+                } else {
+                    res.json("Incorrect username or password!")
+                }
             } else {
-                res.json("Incorrect username or password!")
+                res.json("Unauthorized")
             }
         } else {
             res.json("user does not exist!")
@@ -30,10 +34,14 @@ app.post('/adminlogin', (req, res) => {
     userModel.findOne({username: username})
     .then(user => {
         if (user) {
-            if (user.password === password) {
-                res.json("Login Success!")
+            if (user.role === 'Admin') {
+                if (user.password === password) {
+                    res.json("Login Success!")
+                } else {
+                    res.json("Incorrect username or password!")
+                }
             } else {
-                res.json("Incorrect username or password!")
+                res.json("user does not have admin privileges!")
             }
         } else {
             res.json("user does not exist!")
