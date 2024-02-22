@@ -11,11 +11,12 @@ function Register() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [role, setRole] = useState('user')
     const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/register', {username, email, password})
+        axios.post('http://localhost:3001/register', {username, email, password, role})
         .then(Result => {console.log(Result)
             navigate('/login')
         })
@@ -64,6 +65,13 @@ function Register() {
                                     <div className='bg-gray-100 w-64 p-2 flex items-center mb-8'>
                                         <MdLockOutline className='text-gray-400 m-2' />
                                         <input type='password' placeholder='Password' name='password' className='bg-gray-100 outline-none text-sm flex-1' onChange={(e) => setPassword(e.target.value)} />
+                                    </div>
+                                    
+                                    <div className='hidden'>
+                                        <select value={role} onChange={(e) => setRole(e.target.value)}>
+                                            <option value="user">User</option>
+                                            <option value="admin">Admin</option>
+                                        </select>   
                                     </div>
                                     
                                     <button className='border-2 text-blue-500 border-blue-500 rounded-full px-12 py-2 inline-block font-semibold duration-300 hover:bg-blue-500 hover:text-white'>Sign Up</button>
